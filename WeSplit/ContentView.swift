@@ -9,43 +9,30 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @State private var count = 0
-    @State private var name = ""
+    @State private var checkAmount = ""
+    @State private var numOfPeople = 2
+    @State private var tipPercentage = 2
+
+    let tipPercentages = [10, 15, 20, 25, 0]
 
     var body: some View {
         NavigationView {
             Form {
-                TextField("Enter your name: ", text: $name)
-                Text("howdy, \(name)")
-
-                Button("Tap Count: \(count)") {
-                    self.count += 1
-                }
-
                 Section {
-                    ForEach(0 ..< 5) {
-                        Text("lala \($0)")
+                    TextField("Enter the check amount: ", text: $checkAmount)
+                        .keyboardType(.decimalPad)
+
+                    Picker("Number of people", selection: $numOfPeople) {
+                        ForEach(0 ..< 100) {
+                            Text("\($0) people")
+                        }
                     }
                 }
 
-                Section {
-                    Text("lala")
-                    Text("lala")
-                    Text("lala")
-                }
+                // Just for refrence of 1-way binding
+                Text("$ \(checkAmount)")
 
-                // Does not change how it is displayed in the screen
-                Group {
-                    Text("lala")
-                    Text("lala")
-                    Text("lala")
-                    Text("lala")
-                    Text("lala")
-                    Text("lala")
-                }
-
-
-            }.navigationBarTitle("SwiftUI Form", displayMode: .large)
+            }.navigationBarTitle("We split", displayMode: .large)
         }
     }
 }

@@ -29,6 +29,14 @@ struct ContentView: View {
                     }
                 }
 
+                Section(header: Text("How much do you want to leave?")) {
+                    Picker("Tip Percentage", selection: $tipPercentage) {
+                        ForEach(0 ..< tipPercentages.count) {
+                            Text("\(tipPercentages[$0])%")
+                        }
+                    }.pickerStyle(SegmentedPickerStyle())
+                }
+
                 // Just for refrence of 1-way binding
                 Text("$ \(checkAmount)")
 

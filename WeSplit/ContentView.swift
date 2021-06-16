@@ -15,6 +15,18 @@ struct ContentView: View {
 
     let tipPercentages = [10, 15, 20, 25, 0]
 
+    var totalPerPerson: Double {
+        let peopleCount = Double(numOfPeople + 2)
+        let tipSelection = Double(tipPercentages[tipPercentage])
+        let orderAmount = Double(checkAmount) ?? 0
+
+        let tipValue = orderAmount / 100 * tipSelection
+        let grandTotal = orderAmount + tipValue
+        let amountPerPerson = grandTotal / peopleCount
+
+        return amountPerPerson
+    }
+
     var body: some View {
         NavigationView {
             Form {
@@ -23,7 +35,7 @@ struct ContentView: View {
                         .keyboardType(.decimalPad)
 
                     Picker("Number of people", selection: $numOfPeople) {
-                        ForEach(0 ..< 100) {
+                        ForEach(2 ..< 100) {
                             Text("\($0) people")
                         }
                     }
@@ -37,8 +49,11 @@ struct ContentView: View {
                     }.pickerStyle(SegmentedPickerStyle())
                 }
 
-                // Just for refrence of 1-way binding
-                Text("$ \(checkAmount)")
+
+                Section {
+                    Text("$ \(totalPerPerson, specifier: "%.2f")")
+                }
+
 
             }.navigationBarTitle("We split", displayMode: .large)
         }
